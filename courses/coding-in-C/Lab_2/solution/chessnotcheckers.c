@@ -32,16 +32,22 @@ int main()
 
      for (i=8; i>0; i--)
     {
+        printf("  ________________________________________\n");
+        printf("%d ",i);
         for(j=0; j<8; j++)
         {
+            printf("|");
             if(((i+j)%2)>0)
-            printf("  ss");
+            printf("####");
         else
-        printf("  ww");
-        }
-        printf("\n");
+        printf("    ");
+        } 
+        printf("| %d\n",i);
     }
-    
+    printf("  ________________________________________\n"); 
+    for(j=0; j<8; j++)
+    printf("%5c",reihen[j]);
+    printf("\n"); 
     return 0;
 
 }
