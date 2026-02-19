@@ -46,20 +46,42 @@ int main ()
                         int i_direction = rand() % 2;
                         if (i_direction == 1)
                         {
-                            if (j < FIELDSIZE - 1) 
+                            if (j < FIELDSIZE - 1)
                             {
-                                 *(p_i_temp + j + 1) += 1; 
-                            } 
-                        } 
-                        else 
-                        { 
-                            if (j > 0) { *(p_i_temp + j - 1) += 1; 
+                                *(p_i_temp + j + 1) += 1;
+                            }
+                            else
+                            {
+                                *(p_i_temp + j) += 1;
+                            }
                         }
+                        else
+                        {
+                            if (j > 0)
+                            {
+                                *(p_i_temp + j - 1) += 1;
+                            }
+                            else
+                            {
+                                *(p_i_temp + j) += 1;
+                            }
                         }
-                    }
-                }
+                         
+                    }   
+        }
         // 4. act upon collisions 
+            for (int k = 0; k < FIELDSIZE; k++)
+            {
+                if (*(p_i_temp + k) > 1)
+                {
+                    *(p_i_temp + k) = 0;
+                }
+            }
         // 5. temp -> field copy
+        for (int k = 0; k < FIELDSIZE; k++)
+        {
+            *(p_i_field + k) = *(p_i_temp + k);
+        }
     }
 
 
