@@ -40,8 +40,35 @@ int main()
     }
 
  /*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
- //putting information from a text file into a struct and using it
- 
+ //using fprintf() to write to a file
+ /*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    FILE* f = fopen("sensor_sec2.txt", "w");           // Open the file "sensor_sec2.txt" in write mode and assign the file pointer to 'f'
+    
+    if (f)                                            // Check if the file was successfully opened
+    {
+
+        fprintf(f, "Merle sitzt neben mir.\n");     // Write a line of text to the file using fprintf()
+        fprintf(f, "Sie programmiert sehr fleißig.\n");// Write another line of text to the file using fprintf()
+        fclose(f);                                   // Close the file after writing is done to free up system resources
+    
+    }
+ /*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ //using fscanf() to read from a file
+ /*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    FILE* f2 = fopen("sensor_sec2.txt", "r");          // Open the file "sensor_sec2.txt" in read mode and assign the file pointer to 'f2'
+    
+    char buffer[100];                                  // Declare a buffer to store the lines read from the file    
+    
+    if (f2)                                           // Check if the file was successfully opened
+    {
+      
+        while (fgets(buffer, sizeof(buffer), f2))     // Read lines from the file one by one until End Of File (EOF) is reached
+        {                                            // The fgets() function reads a line from the file pointed to by 'f2' and stores it in 'buffer'
+            printf("%s", buffer);                    // Output the line read from the file to the standard output (console)
+        }
+        fclose(f2);                                  // Close the file after reading is done to free up system resources
+    
+    }
 
 
 
