@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Node 
+typedef struct Song 
 {
     double d;
-    struct Node* pnext;
-}Node;
+    struct Song* pnext;
+}Song;
 
 //Funktion um mehr Knoten zu erstellen
 
-Node* createNode(double value)
+Song* createNode(double value)
 {
-    Node* NewNode= (Node*)malloc(sizeof(Node));
+    Song* NewNode= (Song*)malloc(sizeof(Song));
     if (!NewNode) return NULL;
     NewNode->d=value;
     NewNode->pnext=NULL;
     return NewNode;
 }
 
-Node* InsertPos(Node* head, int pos, double d)
+Song* InsertPos(Song* head, int pos, double d)
 {
     if(pos<0){return head;}
 
     if(pos==1)
     {
-        Node* NewNode= createNode(d);
+        Song* NewNode= createNode(d);
         NewNode->pnext=head;
         return NewNode;
     }
-Node* curr = head;
+Song* curr = head;
 for(int i=1; i<pos && curr != NULL; i++)
 {
     curr= curr->pnext;
@@ -36,7 +36,7 @@ for(int i=1; i<pos && curr != NULL; i++)
 
 if(curr==NULL){return head;}
 
-Node* NewNode= createNode(d);
+Song* NewNode= createNode(d);
 NewNode->pnext= curr->pnext;
 curr->pnext= NewNode;
 
@@ -45,32 +45,32 @@ return head;
 
 //inserting a node at a specific pos and deleting a node at a specific pos
 
-Node* DeletePos(Node* head, int pos)
+Song* DeletePos(Song* head, int pos)
 {
     if(pos<0){return head;}
 
     if(pos==1)
     {
-        Node* temp= head;
+        Song* temp= head;
         head= head->pnext;
         free(temp);
         return head;
     }
-    Node* curr= head;
+    Song* curr= head;
     for(int i=1; i<pos-1 && curr->pnext != NULL; i++)
     {
         curr= curr->pnext;
     }
     if(curr->pnext == NULL){return head;}
-    Node* temp= curr->pnext;
+    Song* temp= curr->pnext;
     curr->pnext= curr->pnext->pnext;
     free(temp);
     return head;
 }
 
-void printListToo(struct Node *head)
+void printListToo(struct Song *head)
 {
-    struct Node *curr = head;
+    struct Song *curr = head;
     while (curr != NULL)
     {
         printf("%f", curr->d);
@@ -198,10 +198,10 @@ void printQueue(Queue *q) {
 
 int main() 
 {
-    Node* head = NULL;
+    Song* head = NULL;
 for(int i = 0; i < 50; i++)
     {
-        Node* newNode = createNode((double)i);
+        Song* newNode = createNode((double)i);
         if (newNode)
         {
             newNode->pnext = head;

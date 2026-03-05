@@ -18,6 +18,7 @@ typedef struct Song
 typedef struct Playlist
 {
     Song *p_head;
+    Song *p_tail; /* pointer to last song, for O(1) append */
 } Playlist;
 
 /**
@@ -28,6 +29,7 @@ typedef struct Playlist
 void init_playlist(Playlist *p_playlist)
 {
     p_playlist->p_head = NULL;
+    p_playlist->p_tail = NULL;
     return;
 }
 
@@ -67,16 +69,15 @@ void add_song(Playlist *playlist, const char *title, const char *artist)
 
     if (playlist->p_head == NULL)
     {
+        /* empty list: head and tail both point to the new song */
         playlist->p_head = newSong;
+        playlist->p_tail = newSong;
         return;
     }
 
-    Song *p_lastSong = playlist->p_head;
-    while (p_lastSong->p_nextSong)
-    {
-        p_lastSong = p_lastSong->p_nextSong;
-    }
-    p_lastSong->p_nextSong = newSong;
+    /* append after tail and update tail pointer */
+    playlist->p_tail->p_nextSong = newSong;
+    playlist->p_tail = newSong;
 
     return;
 }
@@ -117,6 +118,10 @@ void delete_firstSong(Playlist *playlist)
     Song *tmp = playlist->p_head;
 
     playlist->p_head = playlist->p_head->p_nextSong;
+    if (playlist->p_head == NULL) {
+        /* list became empty, clear tail too */
+        playlist->p_tail = NULL;
+    }
 
     free(tmp->title);
     free(tmp->artist);

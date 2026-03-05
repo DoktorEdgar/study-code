@@ -3,24 +3,24 @@
 #include <time.h>
 
 // TODO 1: Struct definition outside main
-typedef struct Node
+typedef struct Song
 {
     double d;
-    struct Node* pnext;
-} Node;
+    struct Song* pnext;
+} Song;
 
-Node* createNode(double value)
+Song* createNode(double value)
 {
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    Song* newNode = (Song*)malloc(sizeof(Song));
     if (!newNode) return NULL;
     newNode->d = value;
     newNode->pnext = NULL;
     return newNode;
 }
 
-void printList(Node* head)
+void printList(Song* head)
 {
-    Node* current = head;
+    Song* current = head;
     printf("List: ");
     while (current != NULL)
     {
@@ -76,19 +76,19 @@ void ShiftNumbers (double* darray)
 
 }
 
-Node* InsertPos(Node* head, int pos, double d)
+Song* InsertPos(Song* head, int pos, double d)
 {
     if (pos < 1)
     {return head;}
 
     if( pos == 1)
     {
-        Node* NewNode = createNode(d);
+        Song* NewNode = createNode(d);
         NewNode->pnext = head;
         return NewNode;
     }
 
-     Node* curr = head;
+     Song* curr = head;
     for (int i = 1; i < pos - 1 && curr != NULL; i++)
     {
         curr = curr->pnext;
@@ -97,16 +97,16 @@ Node* InsertPos(Node* head, int pos, double d)
     if (curr == NULL)
         return head;
 
-    Node* NewNode = createNode(d);
+    Song* NewNode = createNode(d);
     NewNode->pnext = curr->pnext;
     curr->pnext = NewNode;
 
     return head; 
 }
 
-void printListToo(struct Node *head)
+void printListToo(struct Song *head)
 {
-    struct Node *curr = head;
+    struct Song *curr = head;
     while (curr != NULL)
     {
         printf("%f", curr->d);
@@ -117,9 +117,9 @@ void printListToo(struct Node *head)
     printf("\n");
 }
 
-void freeList(Node* head)
+void freeList(Song* head)
 {
-    Node* temp;
+    Song* temp;
     while (head != NULL)
     {
         temp = head;
@@ -133,14 +133,14 @@ int main()
 {
     
 // TODO 2: Define a starting pointer for the linked list called head.
-    Node* head = NULL;
+    Song* head = NULL;
 
 // TODO 4: Create 50 nodes and add them to the linked list,
 //         starting with the pointer head.
 
     for (int i = 0; i < 50; i++)
     {
-        Node* newNode = createNode((double)i);
+        Song* newNode = createNode((double)i);
         if (newNode)
         {
             newNode->pnext = head;

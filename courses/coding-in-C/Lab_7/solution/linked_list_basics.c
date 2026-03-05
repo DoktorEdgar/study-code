@@ -3,16 +3,16 @@
 #include <time.h>
 
 // 1. Define struct Node using typedef
-typedef struct Node
+typedef struct Song
 {
     double value;
-    struct Node *next;
-} Node;
+    struct Song *next;
+} Song;
 
 // 3. Function to create a new node
-Node *createNode(double value)
+Song *createNode(double value)
 {
-    Node *newNode = malloc(sizeof *newNode);
+    Song *newNode = malloc(sizeof *newNode);
     if (newNode == NULL)
     {
         printf("Memory allocation failed\n");
@@ -28,13 +28,13 @@ int main()
     srand(time(NULL));
 
     // 2. Define head pointer
-    Node *head = NULL;
-    Node *current = NULL;
+    Song *head = NULL;
+    Song *current = NULL;
 
     // 4. Create 50 nodes and append to list
     for (int i = 0; i < 50; i++)
     {
-        Node *newNode = createNode(rand());
+        Song *newNode = createNode(rand());
 
         if (newNode == NULL)
         {
@@ -74,9 +74,9 @@ int main()
     arr[3] = newValue;
 
     // ---- LINKED LIST INSERTION at position 3 ----
-    Node *newNode = createNode(newValue);
+    Song *newNode = createNode(newValue);
 
-    Node *temp = head;
+    Song *temp = head;
 
     // alternative: Node *temp = head->next->next;
     // Move to node before position 3 (index 2)
@@ -98,7 +98,7 @@ int main()
 
     // Print linked list
     printf("Linked List:\n");
-    Node *iter = head;
+    Song *iter = head;
     while (iter != NULL)
     {
         printf("%.0f ", iter->value);
@@ -107,7 +107,7 @@ int main()
     printf("\n");
 
     // Free linked list memory
-    Node *tmp;
+    Song *tmp;
     while (head != NULL)
     {
         tmp = head;
