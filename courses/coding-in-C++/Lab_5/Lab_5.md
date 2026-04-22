@@ -92,7 +92,9 @@ Write a **generic function** that returns the smallest value in a frame.
 
 ### 🟢 Task 4: Telemetry Tag Composer
 
-Write a **generic function with two type parameters** that outputs two values.
+Drone data is often labeled with metadata (e.g. sensor name + priority).
+
+Write a **generic function with two type parameters** to print such pairs.
 
 #### Requirements
 
@@ -104,117 +106,207 @@ Write a **generic function with two type parameters** that outputs two values.
 
 ### 🟢 Task 5: Fixed-Size Packet Buffer
 
-Implement a **generic fixed-size buffer**.
+In Section I, you implemented a function that prints arrays using a size parameter.
+
+In embedded drone systems, sensor frames often have a fixed size known at compile time.
+This means:
+- the size is part of the type (e.g. `int[4]`)
+- it does not need to be passed as a function argument
+
+In this task, you will **improve your existing functions** to support this concept.
 
 #### Requirements
 
-- Use a type parameter and a compile-time size parameter
-- Support:
-  - write by index
-  - read by index
-  - print all elements
-- Test with:
-  - integers
-  - doubles
+- Adapt your existing array-based functions so that:
+  - the size is NOT passed as a parameter anymore
+  - the function automatically determines the size
+- Apply this idea to:
+  - your print function (from Task 2)
+  - your minimum function (from Task 3)
+
+#### Test your solution with:
+
+- an integer array of size 4
+- a double array of size 6
+
+#### Questions
+
+Write the answers as comments:
+
+- Why is the size no longer needed as a parameter?
+- What advantage does this have compared to the previous version?
+
+#### Important
+
+- Do NOT create a class or container
+- Work directly with arrays
+- Reuse and adapt your previous functions instead of rewriting everything
 
 ---
 
-## 🟡 Section III: Technical STL Scenario – Flight Recorder Analysis
+## 🟡 Section II: Flight Recorder Data Analysis
+
+The drone stores raw measurement data during test flights.
+
+You now process this data using **STL containers and algorithms**.
+
+---
 
 ### Task 6: Sort and Inspect Recorded Samples
 
-Use values:
+A flight recorder captured the following data:
+
 `42, 17, 42, 5, 99, 17, 63, 12`
 
 #### Requirements
 
-- Store in `std::vector`
-- Sort using STL
-- Print sorted vector
+- Store the data in a `std::vector`
+- Print the original data
+- Sort the data using a STL algorithm
+- Print the sorted data
 - Search for value `63`
-- Print result
+- Output whether it exists
+
+#### Note
+
+- Add this task to your existing `main()` function 
+- Organize your code into logical sections using comments
 
 ---
 
 ### Task 7: Noise Cleanup Pipeline
 
-Use values:
+Sensor errors sometimes produce invalid values (`-1`).
+
+Recorded data:
+
 `7, -1, 13, -1, 21, 21, 8, -1, 8`
 
 #### Requirements
 
-- Replace `-1` with `0`
-- Count occurrences of `8`
-- Reverse vector
-- Print after each step
+- Replace all `-1` with `0`
+- Count occurrences of value `8`
+- Reverse the dataset
+- Print results after each step
+- Use STL algorithms
+
+#### Note
+
+- Add this task to your existing `main()` function 
+- Organize your code into logical sections using comments
 
 ---
 
-## 🟡 Section IV: Iterator Thinking
+## 🟡 Section IV: Iterator-Based Processing
+
+To understand how STL works internally, you now operate directly on iterators.
+
+---
 
 ### Task 8: Manual Iterator Walk
 
 #### Requirements
 
-- Use explicit iterator
-- No range-based loop
-- Output all elements
-- Explain `*it` and `++it`
+- Create a `std::vector<int>`
+- Traverse using an explicit iterator
+- Do NOT use range-based loops
+- Print all elements
+
+#### Questions
+
+Answer as comments:
+
+- What does `*it` do?
+- What does `++it` do?
+
+#### Context
+
+STL algorithms internally use iterators — understanding them is essential.
 
 ---
 
-## 🔴 Section V: Generic Mission Analyzer
+## 🔴 Section V: Drone Mission Analyzer (Integration)
+
+Now you combine everything into a **complete analysis tool**.
+
+---
 
 ### Task 9: Build a Generic Analysis Toolkit
 
-#### Part A
-
-Implement functions for:
-
-- sum
-- max
-- average
-
-Use STL where appropriate.
+The drone test bench must evaluate recorded data automatically.
 
 ---
 
-#### Part B
+### Part A: Generic Analysis
 
-Specialize behavior for `bool`.
+Implement generic functions to compute:
 
-Rule:
+- sum of values
+- maximum value
+- average value
 
-Return `true` if more than half values are `true`.
+#### Requirements
+
+- Use `std::vector`
+- Use STL algorithms where appropriate
 
 ---
 
-#### Part C
+### Part B: Special Case for System States
 
-Test with:
+Drone logs may contain boolean values:
 
-- int
-- double
-- bool
+- `true` → system active
+- `false` → system inactive
 
-Print results clearly.
+Implement a **template specialization** for one function.
+
+#### Requirement
+
+Return:
+
+`true` if more than half of the values are true, otherwise false.
+
+#### Context
+
+Boolean data represents states, not numeric values — it must be handled differently.
+
+---
+
+### Part C: Integration Program
+
+Build a program that:
+
+1. Processes fixed sensor frames
+2. Stores data in vectors
+3. Cleans and analyzes recorded data
+4. Applies your generic analysis functions
+5. Handles boolean system states correctly
+
+#### Output
+
+For each dataset:
+
+- raw data
+- processed data
+- computed results
 
 ---
 
 ## Reflection Questions
 
-1. Why are templates useful?
+1. Why are templates useful in drone software?
 2. Why do STL algorithms not depend on container type?
 3. Why do some algorithms not work with all containers?
-4. When is specialization useful?
-5. What disadvantages did you notice?
+4. When is template specialization useful?
+5. What disadvantages did you observe?
 
 ---
 
 ## Learning Outcomes
 
-- Use templates
-- Work with STL
-- Understand iterators
-- Apply algorithms
-- Use specialization
+- write generic functions
+- understand templates and specialization
+- use STL containers and algorithms
+- work with iterators
+- build a small real-world inspired data processing system
